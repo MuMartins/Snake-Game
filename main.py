@@ -1,6 +1,7 @@
 # Importando as bibliotecas necessárias
 import pygame
 import sys
+from random import randrange
 
 # Funções
 
@@ -12,27 +13,37 @@ screen_borderH = 500
 screen = pygame.display.set_mode((screen_borderW, screen_borderH))
 pygame.display.set_caption('Snake Game')
 clock = pygame.time.Clock()
+movement_on = True
 
 # Config
 player_x = 20
 player_y = 20
 player_speed = 20
 
-bg_surface = pygame.image.load(
-    'C:/Users/muril/Documents/ÁREA DE TRABALHO/01 - SCRIPTS/PYTHON/03 - PYGAME/Snake-Game/ASSETS/background.png')
+bg_surface = pygame.image.load('ASSETS/background.png')
 bg_surface = pygame.transform.scale2x(bg_surface)
+
+food_surface = pygame.image.load('ASSETS/food.png')
+food_x = 220
+food_y = 220
+
+box_surface = pygame.image.load('ASSETS/box.png')
+box_x = randrange(0, 500, 20)
+box_y = randrange(0, 500, 20)
+
+game_over = pygame.image.load('ASSETS/game-over.png')
 
 # Main loop
 
 
 def main():
     '''Definindo escopo global para as variaveis de movimentação'''
-    global player_x, player_y, player_speed
+    global movement_on, player_x, player_y, player_speed, food_x, food_y, box_x, box_y
 
     '''Loop principal onde o jogo está sendo rodado'''
     while True:
         # Definindo os frames por segundo
-        clock.tick(15)
+        clock.tick(5)
 
         '''Verifição a cada frame do jogo'''
         for event in pygame.event.get():
@@ -42,6 +53,7 @@ def main():
 
         '''Movimentação do player'''
         keys = pygame.key.get_pressed()
+        
         if keys[pygame.K_UP]:
             player_y -= player_speed
             if player_y < 0:
@@ -62,9 +74,19 @@ def main():
             if player_x > (screen_borderW - 20):
                 player_x = 0
 
+
+        if player_x == food_x and player_y == food_y:
+            food_x = randrange(0, 500, 20)
+            food_y = randrange(0, 500, 20)
+
+        if player_x == box_x and player_y == box_y:
+            screen.blit(game_over, (0,0))
+
         '''Objetos sendo colocados na tela a cada frame'''
-        # background
+        # Objetos colocados na tela
         screen.blit(bg_surface, (0, 0))
+        screen.blit(food_surface, (food_x, food_y))
+        screen.blit(box_surface, (box_x, box_y))
 
         # Snake
         pygame.draw.rect(screen, (0, 0, 255), (player_x, player_y, 20, 20))
