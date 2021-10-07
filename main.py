@@ -23,44 +23,28 @@ snake_list = []
 snake_length = 1
 
 bg_surface = pygame.image.load('ASSETS/background.png').convert()
-# bg_surface = pygame.image.load(
-#     r'C:\Users\muril\Documents\ÁREA DE TRABALHO\01 - SCRIPTS\PYTHON\03 - PYGAME\Snake-Game\ASSETS\background.png').convert()
 bg_surface = pygame.transform.scale2x(bg_surface)
 
 food_surface = pygame.image.load('ASSETS/food.png')
-# food_surface = pygame.image.load(
-    # r'C:\Users\muril\Documents\ÁREA DE TRABALHO\01 - SCRIPTS\PYTHON\03 - PYGAME\Snake-Game\ASSETS\food.png')
 food_x = 220
 food_y = 220
 
 box_surface = pygame.image.load('ASSETS/box.png')
-# box_surface = pygame.image.load(
-#     r'C:\Users\muril\Documents\ÁREA DE TRABALHO\01 - SCRIPTS\PYTHON\03 - PYGAME\Snake-Game\ASSETS\box.png')
 box_x = randrange(0, 500, 20)
 box_y = randrange(0, 500, 20)
 
 game_over = pygame.image.load('ASSETS/game-over.png')
-# game_over = pygame.image.load(
-    # r'C:\Users\muril\Documents\ÁREA DE TRABALHO\01 - SCRIPTS\PYTHON\03 - PYGAME\Snake-Game\ASSETS\game-over.png')
-
-head_left = pygame.image.load('ASSETS/head.png')
-head_right = pygame.transform.rotate(head_left, 180)
-head_down = pygame.transform.rotate(head_left, 90)
-head_up = pygame.transform.rotate(head_left, 270)
 
 # Main loop
 
 
 def snake(snake_list):
-    for all_snake in snake_list:
-        if movement == 'up':
-            screen.blit(head_up, [all_snake[0], all_snake[1]])
-        if movement == 'down':
-            screen.blit(head_down, [all_snake[0], all_snake[1]])
-        if movement == 'left':
-            screen.blit(head_left, [all_snake[0], all_snake[1]])
-        if movement == 'right':
-            screen.blit(head_right, [all_snake[0], all_snake[1]])
+    for all_snake in snake_list[:-1]:
+        pygame.draw.rect(screen, (0, 0, 255), [
+                         all_snake[0], all_snake[1], 20, 20])
+
+    for head_snake in snake_list[0]:
+        pygame.draw.rect(screen, (255, 0, 0), [player_x, player_y, 20, 20])
 
 
 def main():
