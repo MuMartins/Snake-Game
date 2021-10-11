@@ -30,7 +30,7 @@ def game_over():
                 if event.key == pygame.K_r and not player_alive:
                     main()
 
-        # Puts the game over screen
+        # Puts the game over screen and texts
         screen.fill((0, 0, 0))
         screen.blit(game_over_surface, (0, 0))
         score_offgame_surface = myfont.render(
